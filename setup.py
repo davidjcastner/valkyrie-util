@@ -7,7 +7,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='valkyrie_util',
-    version='0.0.1',
+    version='0.1.0',
     author='David Castner',
     author_email='davidjcastner@gmail.com',
     description='A python library of various math and performance tools',
