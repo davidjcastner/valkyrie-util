@@ -1,1 +1,1 @@
-from valkyrie_util.TestClass import TestClass
+from valkyrie_util.TestClass import add_one

@@ -1,2 +1,5 @@
-def test_sample():
-    assert True
+from valkyrie_util import add_one
+
+
+def test_add_one() -> None:
+    assert add_one(1) == 3
