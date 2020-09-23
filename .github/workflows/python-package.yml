@@ -3,11 +3,7 @@
 
 name: Lint & Test Python Package
 
-<<<<<<< HEAD
-on: [ push, pull_request ]
-=======
 on: [ push ]
->>>>>>> a6a31219b73cad03cff97aa96ad3365c94594fe2
 
 jobs:
   build:
