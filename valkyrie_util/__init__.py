@@ -1,1 +1,1 @@
-from valkyrie_util.TestClass import add_one
+from valkyrie_util.Calculate import Calculate # noqa F401
