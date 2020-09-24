@@ -18,6 +18,17 @@ def test_normal_cases() -> None:
 
 
 def test_special_cases() -> None:
+    gen = triangle_num_iterator(0)
+    assert next(gen) == 0
+    assert next(gen) == 1
+    assert next(gen) == 3
+    assert next(gen) == 6
+    assert next(gen) == 10
+    assert next(gen) == 15
+    assert next(gen) == 21
+
+
+def test_unusual_input() -> None:
     gen = triangle_num_iterator(4)
     assert next(gen) == 10
     assert next(gen) == 15
@@ -34,6 +45,8 @@ def test_special_cases() -> None:
 
 def test_invalid_input() -> None:
     with pytest.raises(ValueError):
-        triangle_num_iterator(-1)
+        for t in triangle_num_iterator(-1):
+            break
     with pytest.raises(ValueError):
-        triangle_num_iterator(-123456789)
+        for t in triangle_num_iterator(-123456789):
+            break
