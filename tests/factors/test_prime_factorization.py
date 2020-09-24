@@ -1,5 +1,5 @@
 import pytest
-from valkyrie_util.primes import prime_factorization
+from valkyrie_util.factors import prime_factorization
 
 
 def test_normal_cases() -> None:
