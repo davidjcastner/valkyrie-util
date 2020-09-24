@@ -1,14 +1,14 @@
 from valkyrie_util.factors import lcm_factorization
 
 
-def test_lcm_factorization() -> None:
-    # normal use cases
+def test_normal_cases() -> None:
     assert lcm_factorization([{2: 1}, {2: 1}]) == {2: 1}
     assert lcm_factorization([{2: 2}, {2: 3}]) == {2: 3}
     assert lcm_factorization([{2: 1}, {3: 1}]) == {2: 1, 3: 1}
     assert lcm_factorization([{2: 1, 3: 2}, {3: 3, 5: 1}]) == {2: 1, 3: 3, 5: 1}
 
-    # special test cases
+
+def test_special_cases() -> None:
     assert lcm_factorization([]) == {}
     assert lcm_factorization([{}]) == {}
     assert lcm_factorization([{}, {}, {}]) == {}
@@ -16,6 +16,8 @@ def test_lcm_factorization() -> None:
     assert lcm_factorization([{-1: 1}, {11: 1}]) == {-1: 1, 11: 1}
     assert lcm_factorization([{2: -1}, {2: 1}]) == {2: 1}
 
+
+def test_immutability() -> None:
     # check for equivalency but not mutation
     fact_in = {}
     fact_out = lcm_factorization([fact_in])

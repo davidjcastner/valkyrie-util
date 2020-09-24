@@ -1,7 +1,7 @@
 from valkyrie_util.calculate import range_sum_int
 
 
-def test_range_sum_int() -> None:
+def test_normal_cases() -> None:
     assert range_sum_int(0, 0) == 0
     assert range_sum_int(0, 1) == 1
     assert range_sum_int(0, 2) == 3
@@ -10,6 +10,9 @@ def test_range_sum_int() -> None:
     assert range_sum_int(2, 0) == 3
     assert range_sum_int(3, 0) == 6
     assert range_sum_int(5, 6) == 11
+
+
+def test_edge_cases() -> None:
     assert range_sum_int(0, 11, 4) == 12
     assert range_sum_int(0, 12, 4) == 24
     assert range_sum_int(0, 13, 4) == 24

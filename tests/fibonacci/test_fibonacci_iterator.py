@@ -1,8 +1,7 @@
 from valkyrie_util.fibonacci import fibonacci_iterator
 
 
-def test_fibonacci_iterator() -> None:
-    # testing normal fibonacci sequence
+def test_normal_cases() -> None:
     gen = fibonacci_iterator()
     assert next(gen) == 1
     assert next(gen) == 1
@@ -16,7 +15,8 @@ def test_fibonacci_iterator() -> None:
     assert next(gen) == 55
     assert next(gen) == 89
 
-    # testing pre initialized sequence - part 1
+
+def test_special_cases() -> None:
     gen = fibonacci_iterator(a=8, b=13)
     assert next(gen) == 8
     assert next(gen) == 13
@@ -25,7 +25,8 @@ def test_fibonacci_iterator() -> None:
     assert next(gen) == 55
     assert next(gen) == 89
 
-    # testing pre initialized sequence - part 2
+
+def test_unusual_input() -> None:
     gen = fibonacci_iterator(a=8, b=-3)
     assert next(gen) == 8
     assert next(gen) == -3
