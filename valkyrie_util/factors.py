@@ -2,6 +2,7 @@
 
 from functools import reduce
 from typing import Callable, Dict, List
+# from valkyrie_util.primes import prime_factorization
 
 
 def combine_factorizations(facts: List[Dict[int, int]]) -> Dict[int, int]:
@@ -16,6 +17,18 @@ def combine_factorizations(facts: List[Dict[int, int]]) -> Dict[int, int]:
             else:
                 new_factorization[base] = exponent
     return new_factorization
+
+
+def divisor_count_factorization(fact: Dict[int, int]) -> int:
+    '''returns the amount of divisors from a factorization'''
+    product: Callable[[int, int], int] = lambda x, y: x * y
+    return reduce(product, [e + 1 for b, e in fact.items()], 1)
+
+
+def divisor_count(n: int) -> int:
+    '''returns the amount of divisors for n'''
+    # return divisor_count_factorization(prime_factorization(n))
+    return 0
 
 
 def factorization_product(fact: Dict[int, int]) -> int:

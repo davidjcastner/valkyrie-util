@@ -1,7 +1,7 @@
 from valkyrie_util.primes import prime_iterator
 
 
-def test_prime_iterator() -> None:
+def test_normal_cases() -> None:
     gen = prime_iterator()
     assert next(gen) == 2
     assert next(gen) == 3

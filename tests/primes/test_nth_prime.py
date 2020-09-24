@@ -2,8 +2,7 @@ import pytest
 from valkyrie_util.primes import nth_prime
 
 
-def test_nth_prime() -> None:
-    # test normal input
+def test_normal_cases() -> None:
     assert nth_prime(1) == 2
     assert nth_prime(2) == 3
     assert nth_prime(3) == 5
@@ -15,7 +14,14 @@ def test_nth_prime() -> None:
     assert nth_prime(9) == 23
     assert nth_prime(10) == 29
 
-    # test invalid input
+
+def test_large_input() -> None:
+    assert nth_prime(1000) == 7919
+
+
+def test_invalid_input() -> None:
+    with pytest.raises(ValueError):
+        nth_prime(0)
     with pytest.raises(ValueError):
         nth_prime(-1)
     with pytest.raises(ValueError):
