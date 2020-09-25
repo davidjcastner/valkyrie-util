@@ -1,7 +1,7 @@
 '''utility functions for operations related to factors/divisors'''
 
 from functools import reduce
-from typing import Callable, Dict, List
+from typing import Callable, Dict
 from valkyrie_util.primes import nth_prime
 
 
@@ -10,30 +10,30 @@ class _smart_factorization:
 
     ensures no recalculations of factorizations'''
 
-    known_factorizations: Dict[int, Dict[int, int]] = {1: {}}
+    __known_factorizations: Dict[int, Dict[int, int]] = {1: {}}
 
     @staticmethod
     def get_prime_factors(n: int, last_prime_tested: int = 1) -> Dict[int, int]:
         '''recursively calculates factorizations'''
-        if n in _smart_factorization.known_factorizations:
-            return _smart_factorization.known_factorizations[n].copy()
+        if n in _smart_factorization.__known_factorizations:
+            return _smart_factorization.__known_factorizations[n].copy()
 
         current_divisor = nth_prime(last_prime_tested)
 
         # add the prime to factorization if not already in
-        if current_divisor not in _smart_factorization.known_factorizations:
-            _smart_factorization.known_factorizations[current_divisor] = {current_divisor: 1}
+        if current_divisor not in _smart_factorization.__known_factorizations:
+            _smart_factorization.__known_factorizations[current_divisor] = {current_divisor: 1}
 
         # can stop and conclude that n is prime if current_divisor ** 2 > n
         if current_divisor * current_divisor > n:
-            _smart_factorization.known_factorizations[n] = {n: 1}
+            _smart_factorization.__known_factorizations[n] = {n: 1}
             return {n: 1}
 
         if n % current_divisor == 0:
             quotient = n // current_divisor
             quotient_fact = _smart_factorization.get_prime_factors(quotient, last_prime_tested)
             fact = combine_factorizations({current_divisor: 1}, quotient_fact)
-            _smart_factorization.known_factorizations[n] = fact
+            _smart_factorization.__known_factorizations[n] = fact
             return fact
         else:
             return _smart_factorization.get_prime_factors(n, last_prime_tested + 1)
