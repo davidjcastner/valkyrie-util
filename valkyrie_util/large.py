@@ -1,6 +1,6 @@
 '''operations for integers larger than typical data sizes'''
 
-from typing import List
+from typing import List, Tuple
 
 
 def __normalize(large_num: List[int]) -> List[int]:
@@ -35,7 +35,7 @@ def __carry_values(large_num: List[int], base: int = 10) -> List[int]:
     return result
 
 
-def large_number_sum(large_nums: List[List[int]]) -> List[int]:
+def large_number_sum(*large_nums: List[int]) -> List[int]:
     '''sums all large numbers in the input'''
     large_sum = []
     for addend in large_nums:
