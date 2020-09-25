@@ -4,6 +4,7 @@ from valkyrie_util.collatz import collatz_iterator
 
 def test_normal_cases() -> None:
     gen = collatz_iterator(13)
+    assert next(gen) == 13
     assert next(gen) == 40
     assert next(gen) == 20
     assert next(gen) == 10
@@ -15,13 +16,16 @@ def test_normal_cases() -> None:
 
 def test_large_input() -> None:
     gen = collatz_iterator(1361862)
+    assert next(gen) == 1361862
     assert next(gen) == 1361862 // 2
     gen = collatz_iterator(1361861)
+    assert next(gen) == 1361861
     assert next(gen) == 1361861 * 3 + 1
 
 
 def test_stop_iteration() -> None:
     gen = collatz_iterator(2)
+    assert next(gen) == 2
     assert next(gen) == 1
     with pytest.raises(StopIteration):
         next(gen)
@@ -29,8 +33,8 @@ def test_stop_iteration() -> None:
 
 def test_invalid_input() -> None:
     with pytest.raises(ValueError):
-        collatz_iterator(0)
+        next(collatz_iterator(0))
     with pytest.raises(ValueError):
-        collatz_iterator(-1)
+        next(collatz_iterator(-1))
     with pytest.raises(ValueError):
-        collatz_iterator(-123456789)
+        next(collatz_iterator(-123456789))

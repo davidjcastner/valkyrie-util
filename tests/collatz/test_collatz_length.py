@@ -13,7 +13,7 @@ def test_normal_cases() -> None:
 
 
 def test_large_input() -> None:
-    assert collatz_length(27) == 111
+    assert collatz_length(27) == 112
 
 
 def test_special_cases() -> None:
