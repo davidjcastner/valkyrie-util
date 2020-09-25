@@ -32,7 +32,7 @@ class _smart_factorization:
         if n % current_divisor == 0:
             quotient = n // current_divisor
             quotient_fact = _smart_factorization.get_prime_factors(quotient, last_prime_tested)
-            fact = combine_factorizations([{current_divisor: 1}, quotient_fact])
+            fact = combine_factorizations({current_divisor: 1}, quotient_fact)
             _smart_factorization.known_factorizations[n] = fact
             return fact
         else:
@@ -48,7 +48,7 @@ def prime_factorization(n: int) -> Dict[int, int]:
     return _smart_factorization.get_prime_factors(n)
 
 
-def combine_factorizations(facts: List[Dict[int, int]]) -> Dict[int, int]:
+def combine_factorizations(*facts: Dict[int, int]) -> Dict[int, int]:
     '''combines all factorizations into one, equivalent to multiplying all products of each factorization'''
     new_factorization = {}
     for fact in facts:
@@ -80,7 +80,7 @@ def factorization_product(fact: Dict[int, int]) -> int:
     return reduce(product, [power(b, e) for b, e in fact.items()], 1)
 
 
-def lcm_factorization(facts: List[Dict[int, int]]) -> Dict[int, int]:
+def lcm_factorization(*facts: Dict[int, int]) -> Dict[int, int]:
     '''returns the least common multiple of all factorizations input'''
     new_factorization = {}
     for fact in facts:
