@@ -1,6 +1,7 @@
 '''utility functions for operations related to factors/divisors'''
 
 from functools import reduce
+from operator import mul
 from typing import Callable, Dict, List, Set
 from valkyrie_util.primes import nth_prime
 
@@ -50,7 +51,7 @@ def prime_factorization(n: int) -> Dict[int, int]:
 
 def combine_factorizations(*facts: Dict[int, int]) -> Dict[int, int]:
     '''combines all factorizations into one, equivalent to multiplying all products of each factorization'''
-    new_factorization = {}
+    new_factorization: Dict[int, int] = {}
     for fact in facts:
         for base, exponent in fact.items():
             if base in new_factorization:
@@ -65,7 +66,7 @@ def combine_factorizations(*facts: Dict[int, int]) -> Dict[int, int]:
 def divisor_count_factorization(fact: Dict[int, int]) -> int:
     '''returns the amount of divisors from a factorization'''
     product: Callable[[int, int], int] = lambda x, y: x * y
-    return reduce(product, [e + 1 for b, e in fact.items()], 1)
+    return reduce(product, (e + 1 for b, e in fact.items()), 1)
 
 
 def divisor_count(n: int) -> int:
@@ -74,15 +75,13 @@ def divisor_count(n: int) -> int:
 
 
 def factorization_product(fact: Dict[int, int]) -> int:
-    '''returns the product which yields the input factorization'''
-    power: Callable[[int, int], int] = lambda b, e: b ** e
-    product: Callable[[int, int], int] = lambda x, y: x * y
-    return reduce(product, [power(b, e) for b, e in fact.items()], 1)
+    '''returns the product which has the prime factorization of fact'''
+    return reduce(mul, (pow(b, e) for b, e in fact.items()), 1)  # type:ignore
 
 
 def lcm_factorization(*facts: Dict[int, int]) -> Dict[int, int]:
     '''returns the least common multiple of all factorizations input'''
-    new_factorization = {}
+    new_factorization: Dict[int, int] = {}
     for fact in facts:
         for base, exponent in fact.items():
             if base in new_factorization:
@@ -115,6 +114,7 @@ class _smart_divisor_sieve:
                 _smart_divisor_sieve.__sieve[multiple].add(divisor)
                 _smart_divisor_sieve.__sieve[multiple].add(multiple // divisor)
 
+    @staticmethod
     def get_divisors(n: int) -> Set[int]:
         '''returns the set of proper divisors of n, growing the sieve as necessary'''
         while n >= len(_smart_divisor_sieve.__sieve):
@@ -131,14 +131,13 @@ def proper_divisors(n: int) -> Set[int]:
 
 class _smart_divisor_sums:
     '''internal memory of divisors sum'''
-    __known_sums: List[int] = [0]
+    __known_sums: Dict[int, int] = {0: 0, 1: 1}
 
     @staticmethod
     def get_sum(n: int) -> int:
         '''returns the sum of proper divisors of n'''
-        current_length = len(_smart_divisor_sums.__known_sums)
-        if n >= current_length:
-            _smart_divisor_sums.__known_sums += [sum(proper_divisors(x)) for x in range(current_length, n + 1)]
+        if n not in _smart_divisor_sums.__known_sums:
+            _smart_divisor_sums.__known_sums[n] = sum(proper_divisors(n))
         return _smart_divisor_sums.__known_sums[n]
 
 
