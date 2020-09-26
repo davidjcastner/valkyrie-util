@@ -1,7 +1,7 @@
 '''utility functions for operations related to factors/divisors'''
 
 from functools import reduce
-from typing import Callable, Dict, Set
+from typing import Callable, Dict, List, Set
 from valkyrie_util.primes import nth_prime
 
 
@@ -94,6 +94,36 @@ def lcm_factorization(*facts: Dict[int, int]) -> Dict[int, int]:
     return new_factorization
 
 
+class _smart_divisor_sieve:
+    '''internal sieve for finding divisors'''
+
+    __sieve: List[Set[int]] = [set(), set([1]), set([1]), set([1])]
+
+    @staticmethod
+    def __grow_sieve() -> None:
+        '''doubles the size of the sieve'''
+        previous_length = len(_smart_divisor_sieve.__sieve)
+        for i in range(previous_length):
+            _smart_divisor_sieve.__sieve.append(set([1]))
+        sqrt = int(len(_smart_divisor_sieve.__sieve)**0.5)
+        for divisor in range(2, sqrt + 1):
+            if previous_length % divisor == 0:
+                starting_index = previous_length
+            else:
+                starting_index = previous_length + divisor - (previous_length % divisor)
+            for multiple in range(starting_index, len(_smart_divisor_sieve.__sieve), divisor):
+                _smart_divisor_sieve.__sieve[multiple].add(divisor)
+                _smart_divisor_sieve.__sieve[multiple].add(multiple // divisor)
+
+    def get_divisors(n: int) -> Set[int]:
+        '''returns the set of proper divisors of n, growing the sieve as necessary'''
+        while n >= len(_smart_divisor_sieve.__sieve):
+            _smart_divisor_sieve.__grow_sieve()
+        return _smart_divisor_sieve.__sieve[n].copy()
+
+
 def proper_divisors(n: int) -> Set[int]:
     '''returns the set of proper divisors of n'''
-    return set()
+    if n < 1:
+        raise ValueError
+    return _smart_divisor_sieve.get_divisors(n)
