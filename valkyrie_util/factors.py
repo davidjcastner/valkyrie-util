@@ -127,3 +127,23 @@ def proper_divisors(n: int) -> Set[int]:
     if n < 1:
         raise ValueError
     return _smart_divisor_sieve.get_divisors(n)
+
+
+class _smart_divisor_sums:
+    '''internal memory of divisors sum'''
+    __known_sums: List[int] = [0]
+
+    @staticmethod
+    def get_sum(n: int) -> int:
+        '''returns the sum of proper divisors of n'''
+        current_length = len(_smart_divisor_sums.__known_sums)
+        if n >= current_length:
+            _smart_divisor_sums.__known_sums += [sum(proper_divisors(x)) for x in range(current_length, n + 1)]
+        return _smart_divisor_sums.__known_sums[n]
+
+
+def proper_divisor_sum(n: int) -> int:
+    '''returns the sum of all proper divisors of n'''
+    if n < 1:
+        raise ValueError
+    return _smart_divisor_sums.get_sum(n)
