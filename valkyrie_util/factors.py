@@ -1,7 +1,7 @@
 '''utility functions for operations related to factors/divisors'''
 
 from functools import reduce
-from typing import Callable, Dict
+from typing import Callable, Dict, Set
 from valkyrie_util.primes import nth_prime
 
 
@@ -92,3 +92,8 @@ def lcm_factorization(*facts: Dict[int, int]) -> Dict[int, int]:
             else:
                 new_factorization[base] = exponent
     return new_factorization
+
+
+def proper_divisors(n: int) -> Set[int]:
+    '''returns the set of proper divisors of n'''
+    return set()
