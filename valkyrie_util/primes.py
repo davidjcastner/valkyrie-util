@@ -12,7 +12,7 @@ class _smart_sieve:
     __prime_list: List[int] = [2, 3]
 
     @staticmethod
-    def growsieve() -> None:
+    def __grow_sieve() -> None:
         '''doubles the size of the sieve'''
         previous_length = len(_smart_sieve.__sieve)
         _smart_sieve.__sieve += [True] * previous_length
@@ -25,12 +25,12 @@ class _smart_sieve:
                 _smart_sieve.__sieve[multiple] = False
 
     @staticmethod
-    def calculate_next_prime() -> None:
+    def __calculate_next_prime() -> None:
         '''finds the next prime after the last prime in prime_list, and adds it to prime_list'''
         possible_prime = _smart_sieve.__prime_list[-1] + 1
         while True:
             if possible_prime >= len(_smart_sieve.__sieve):
-                _smart_sieve.growsieve()
+                _smart_sieve.__grow_sieve()
             if _smart_sieve.__sieve[possible_prime]:
                 _smart_sieve.__prime_list.append(possible_prime)
                 for multiple in range(possible_prime * possible_prime, len(_smart_sieve.__sieve), possible_prime):
@@ -42,14 +42,14 @@ class _smart_sieve:
     def is_prime(n: int) -> bool:
         '''uses the sieve to check if n is prime'''
         while n > _smart_sieve.__prime_list[-1]:
-            _smart_sieve.calculate_next_prime()
+            _smart_sieve.__calculate_next_prime()
         return _smart_sieve.__sieve[n]
 
     @staticmethod
     def nth_prime(n: int) -> int:
         '''uses the sieve's prime_list to return the nth prime'''
         while n > len(_smart_sieve.__prime_list):
-            _smart_sieve.calculate_next_prime()
+            _smart_sieve.__calculate_next_prime()
         return _smart_sieve.__prime_list[n - 1]
 
     @staticmethod
