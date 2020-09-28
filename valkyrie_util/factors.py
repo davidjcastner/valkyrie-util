@@ -1,8 +1,7 @@
 '''utility functions for operations related to factors/divisors'''
 
 from functools import reduce
-from operator import mul
-from typing import Callable, Dict, List, Set
+from typing import cast, Callable, Dict, List, Set
 from valkyrie_util.primes import nth_prime
 
 
@@ -76,7 +75,8 @@ def divisor_count(n: int) -> int:
 
 def factorization_product(fact: Dict[int, int]) -> int:
     '''returns the product which has the prime factorization of fact'''
-    return reduce(mul, (pow(b, e) for b, e in fact.items()), 1)  # type:ignore
+    product: Callable[[int, int], int] = lambda x, y: x * y
+    return reduce(product, (cast(int, pow(b, e)) for b, e in fact.items()), 1)
 
 
 def lcm_factorization(*facts: Dict[int, int]) -> Dict[int, int]:
